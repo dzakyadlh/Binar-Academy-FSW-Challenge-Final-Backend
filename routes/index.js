@@ -1,6 +1,10 @@
-var express = require('express');
+var express = require("express");
 var router = express.Router();
 
-/* GET home page. */
+const gameListRouter = require("./gameList");
+const gameDetailRouter = require("./gameDetail");
+
+router.use("/gamelist", gameListRouter);
+router.use("/gamedetail", gameDetailRouter);
 
 module.exports = router;
