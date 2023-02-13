@@ -79,7 +79,19 @@ module.exports = (sequelize, DataTypes) => {
         }, {where: {email: email}})
       }
     }
-  }
+
+    static deleteacc = async({email, password}) => {
+    try {
+      const User = await this.findOne({where: {email}});
+      if (!User) return Promise.reject("email not found");
+
+      const isPassValid = User.checkPassword(password);
+      if (!isPassValid) return Promise.reject("Wrong Password");
+      return this.destroy({where: {email}})
+    } catch (err) {
+      return Promise.reject(err);
+    }}
+}
   user.init({
     username: DataTypes.STRING,
     email: DataTypes.STRING,

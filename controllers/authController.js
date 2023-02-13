@@ -60,3 +60,13 @@ exports.forgotpassword = (req, res) => {
         res.json({message: "Update failed", msg: err});
     })
 }
+
+exports.deleteacc = (req, res) => {
+    user.deleteacc(req.body).then(() => {
+        res.json({message: "Delete Success"});
+    })
+    .catch((err)=> {
+        console.log(err)
+        res.status(500).json({message: "Delete failed", msg: err});
+    })
+}
