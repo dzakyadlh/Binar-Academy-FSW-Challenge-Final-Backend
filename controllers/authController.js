@@ -33,3 +33,30 @@ exports.login = (req, res) => {
         res.status(500).json({status: "Login Failed", msg: err.message})
     }
 }
+
+exports.showAll = (req, res) => {
+    user.findAll().then((data) => {
+        res.json({status: "Successfully Show All Data", data: data});
+    }).catch((err) => {
+        res.status(500).json({status: "Failed Show Data", msg: err});
+    })
+}
+
+exports.findId = (req, res) => {
+    const {id} = req.params;
+
+    user.findOne({where: { id: id }}).then((user) => {
+        res.json({message: "User found", data: user});
+    }).catch((err) => {
+        res.status(500).json({status: "Failed Show Data", msg: err});
+    })
+}
+
+exports.forgotpassword = (req, res) => {
+    user.forgotpass(req.body).then(() => {
+        res.json({message: "Update Success"});
+    })
+    .catch((err)=> {
+        res.json({message: "Update failed", msg: err});
+    })
+}

@@ -67,6 +67,18 @@ module.exports = (sequelize, DataTypes) => {
         return Promise.reject(err);
       }
     }
+
+    static forgotpass = async({email, password}) => {
+      const encryptedPass = this.#encrypt(password);
+      const EmailExist = await this.findOne({where: {email: email}})
+      if (!EmailExist) {
+        return Promise.reject("Email Not Found!");
+      } else {
+        return this.update({
+          password: encryptedPass
+        }, {where: {email: email}})
+      }
+    }
   }
   user.init({
     username: DataTypes.STRING,
