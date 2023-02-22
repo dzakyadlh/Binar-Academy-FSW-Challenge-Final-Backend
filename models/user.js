@@ -54,15 +54,25 @@ module.exports = (sequelize, DataTypes) => {
       return token;
     }
 
-    static authentication = async({email, password}) => {
+    static authentication = async({user, password}) => {
       try {
-        const User = await this.findOne({where: {email}});
-        if (!User) return Promise.reject("email not found");
-
-        const isPassValid = User.checkPassword(password);
-
-        if (!isPassValid) return Promise.reject("Wrong Password");
-        return Promise.resolve(User);
+        const isUserExist = await this.findOne({where: {username: user}})
+        const isEmailExist = await this.findOne({where: {email: user}})
+        if (!isUserExist) {
+          if (isEmailExist) {
+            const isPassValid = isEmailExist.checkPassword(password);
+            if (!isPassValid) 
+            return Promise.reject("Wrong Password");
+            return Promise.resolve(isEmailExist);
+          } else {
+            return Promise.reject("username or email not found");
+          }
+        } else {
+          const isPassValid = isUserExist.checkPassword(password);
+            if (!isPassValid) 
+            return Promise.reject("Wrong Password");
+            return Promise.resolve(isUserExist);
+        }
       } catch (err) {
         return Promise.reject(err);
       }
@@ -80,14 +90,13 @@ module.exports = (sequelize, DataTypes) => {
       }
     }
 
-    static deleteacc = async({email, password}) => {
+    static deleteacc = async({password}) => {
     try {
-      const User = await this.findOne({where: {email}});
-      if (!User) return Promise.reject("email not found");
+      const User = req.user;
 
       const isPassValid = User.checkPassword(password);
       if (!isPassValid) return Promise.reject("Wrong Password");
-      return this.destroy({where: {email}})
+      return this.destroy({where: {User}})
     } catch (err) {
       return Promise.reject(err);
     }}
