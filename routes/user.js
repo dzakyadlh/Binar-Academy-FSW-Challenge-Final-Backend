@@ -1,8 +1,10 @@
 const router = require("express").Router();
 const user = require("../controllers/userController");
+const restrict = require("../middleware/restrict")
 
-router.post("/findall", user.showAll)
-router.post("/findId/:id", user.findId)
-router.put("/deleteacc", user.deleteacc)
+router.get("/findall", user.showAll)
+router.get("/findId/:id", user.findId)
+router.delete("/deleteacc",restrict, user.deleteacc)
+router.put("/updateacc", restrict, user.userUpdate)
 
 module.exports = router;
