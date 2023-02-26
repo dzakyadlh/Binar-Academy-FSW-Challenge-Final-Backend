@@ -90,16 +90,86 @@ module.exports = (sequelize, DataTypes) => {
       }
     }
 
-    static deleteacc = async({password}) => {
-    try {
-      const User = req.user;
-
-      const isPassValid = User.checkPassword(password);
-      if (!isPassValid) return Promise.reject("Wrong Password");
-      return this.destroy({where: {User}})
-    } catch (err) {
-      return Promise.reject(err);
-    }}
+    static userUpdate = async({username},{NewUsername, NewEmail, OldPassword, NewPassword}) => {
+      const encryptedPass = this.#encrypt(NewPassword);
+      const isUserExist = await this.findOne({where: {username: username}})
+      const isPassValid = isUserExist.checkPassword(OldPassword);
+      const isUsernameExist = await this.findOne({where: {username: NewUsername}})
+      const isEmailExist = await this.findOne({where: {email: NewEmail}})
+      if (!isUsernameExist){
+        if (!isEmailExist){
+          if (!isUserExist) {
+            return Promise.reject("User Not Found!");
+          } else {
+            if (!isPassValid) {
+              return Promise.reject("Wrong Password");
+            } else {
+              return this.update({
+                username: NewUsername,
+                email: NewEmail,
+                password: encryptedPass
+              }, {where: {username: username}})
+            }
+          }
+        }else {
+          if(isUserExist.email === NewEmail) {
+            if (!isUserExist) {
+              return Promise.reject("User Not Found!");
+            } else {
+              if (!isPassValid) {
+                return Promise.reject("Wrong Password");
+              } else {
+                return this.update({
+                  username: NewUsername,
+                  email: NewEmail,
+                  password: encryptedPass
+                }, {where: {username: username}})
+              }
+            }
+          } else {
+            return Promise.reject("Your New Email is Already Exist");
+          }
+        }
+      } else {
+        if(isUserExist.username === NewUsername) {
+          if (!isEmailExist){
+            if (!isUserExist) {
+              return Promise.reject("User Not Found!");
+            } else {
+              if (!isPassValid) {
+                return Promise.reject("Wrong Password");
+              } else {
+                return this.update({
+                  username: NewUsername,
+                  email: NewEmail,
+                  password: encryptedPass
+                }, {where: {username: username}})
+              }
+            }
+          }else {
+            if(isUserExist.email === NewEmail) {
+              if (!isUserExist) {
+                return Promise.reject("User Not Found!");
+              } else {
+                if (!isPassValid) {
+                  return Promise.reject("Wrong Password");
+                } else {
+                  return this.update({
+                    username: NewUsername,
+                    email: NewEmail,
+                    password: encryptedPass
+                  }, {where: {username: username}})
+                }
+              }
+            } else {
+              return Promise.reject("Your New Email is Already Exist");
+            }
+          }
+        } else {
+          return Promise.reject("Your New Username is Already Exist");
+        }
+      }
+    }
 }
   user.init({
     username: DataTypes.STRING,

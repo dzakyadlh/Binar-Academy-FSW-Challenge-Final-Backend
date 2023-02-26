@@ -32,7 +32,6 @@ exports.login = (req, res) => {
         res.json({ status:"Login Success", data: format(data)});
     })
     .catch((err) => {
-        console.log(err)
         res.status(401).json({status: "Login Failed", msg: err})
     })
     } catch (err) {
