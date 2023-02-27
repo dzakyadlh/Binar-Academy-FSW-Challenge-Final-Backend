@@ -1,8 +1,8 @@
 const router = require("express").Router();
 const gameDetail = require("../controllers/gameDetailController");
 
-router.get("/get", gameDetail.get);
-router.post("/create", gameDetail.createGameDetail);
-router.put("/update", gameDetail.updateGameDetail);
+router.get("/", gameDetail.get);
+router.post("/", gameDetail.createGameDetail);
+router.put("/", gameDetail.updateGameDetail);
 
 module.exports = router;

@@ -19,9 +19,9 @@ module.exports = (sequelize, DataTypes) => {
       return this.create({ name, detail, game_id });
     };
 
-    static updateGameDetail = async ({ id, detail }) => {
+    static updateGameDetail = async ({ id, name, detail }) => {
       const game = await this.findOne({ where: { id } });
-      game.update({ detail });
+      game.update({ name, detail });
       return game;
     };
   }
