@@ -22,6 +22,10 @@ module.exports = (sequelize, DataTypes) => {
     static register = async ({username, email, password}) => {
       const encryptedPassword = this.#encrypt(password);
 
+      if(username==="") return Promise.reject("Fill username first");
+      if(password==="") return Promise.reject("Fill password first");
+      if(email==="") return Promise.reject("Fill email first");
+
       const isUserExist = await this.findOne({where: {username: username}})
       const isEmailExist = await this.findOne({where: {email: email}})
 
