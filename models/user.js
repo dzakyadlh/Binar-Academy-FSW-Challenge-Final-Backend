@@ -108,11 +108,13 @@ module.exports = (sequelize, DataTypes) => {
             if (!isPassValid) {
               return Promise.reject("Wrong Password");
             } else {
-              return this.update({
+              this.update({
                 username: NewUsername,
                 email: NewEmail,
                 password: encryptedPass
               }, {where: {username: username}})
+              const NewUser = this.findOne({where: {username: NewUsername}})
+              return Promise.resolve(NewUser)
             }
           }
         }else {
@@ -123,11 +125,13 @@ module.exports = (sequelize, DataTypes) => {
               if (!isPassValid) {
                 return Promise.reject("Wrong Password");
               } else {
-                return this.update({
+                this.update({
                   username: NewUsername,
                   email: NewEmail,
                   password: encryptedPass
                 }, {where: {username: username}})
+                const NewUser = this.findOne({where: {username: NewUsername}})
+                return Promise.resolve(NewUser)
               }
             }
           } else {
@@ -143,11 +147,13 @@ module.exports = (sequelize, DataTypes) => {
               if (!isPassValid) {
                 return Promise.reject("Wrong Password");
               } else {
-                return this.update({
+                this.update({
                   username: NewUsername,
                   email: NewEmail,
                   password: encryptedPass
                 }, {where: {username: username}})
+                const NewUser = this.findOne({where: {username: NewUsername}})
+                return Promise.resolve(NewUser)
               }
             }
           }else {
@@ -158,11 +164,13 @@ module.exports = (sequelize, DataTypes) => {
                 if (!isPassValid) {
                   return Promise.reject("Wrong Password");
                 } else {
-                  return this.update({
+                  this.update({
                     username: NewUsername,
                     email: NewEmail,
                     password: encryptedPass
                   }, {where: {username: username}})
+                  const NewUser = this.findOne({where: {username: NewUsername}})
+                  return Promise.resolve(NewUser)
                 }
               }
             } else {
