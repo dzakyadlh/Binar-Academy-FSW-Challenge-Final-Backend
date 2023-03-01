@@ -44,8 +44,8 @@ exports.deleteacc = (req, res) => {
 exports.userUpdate = (req, res) => {
     try {
         user.userUpdate(req.user, req.body)
-        .then(() => {
-            res.json({message: "Update Success"});
+        .then((data) => {
+            res.json({message: "Update Success", data: data});
         })
         .catch((err)=> {
             res.status(400).json({message: "Update failed", msg: err});
