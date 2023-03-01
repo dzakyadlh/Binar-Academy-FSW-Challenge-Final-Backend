@@ -95,51 +95,14 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     static userUpdate = async({username},{NewUsername, NewEmail, OldPassword, NewPassword}) => {
-      const encryptedPass = this.#encrypt(NewPassword);
       const isUserExist = await this.findOne({where: {username: username}})
       const isPassValid = isUserExist.checkPassword(OldPassword);
       const isUsernameExist = await this.findOne({where: {username: NewUsername}})
       const isEmailExist = await this.findOne({where: {email: NewEmail}})
-      if (!isUsernameExist){
-        if (!isEmailExist){
-          if (!isUserExist) {
-            return Promise.reject("User Not Found!");
-          } else {
-            if (!isPassValid) {
-              return Promise.reject("Wrong Password");
-            } else {
-              this.update({
-                username: NewUsername,
-                email: NewEmail,
-                password: encryptedPass
-              }, {where: {username: username}})
-              const NewUser = this.findOne({where: {username: NewUsername}})
-              return Promise.resolve(NewUser)
-            }
-          }
-        }else {
-          if(isUserExist.email === NewEmail) {
-            if (!isUserExist) {
-              return Promise.reject("User Not Found!");
-            } else {
-              if (!isPassValid) {
-                return Promise.reject("Wrong Password");
-              } else {
-                this.update({
-                  username: NewUsername,
-                  email: NewEmail,
-                  password: encryptedPass
-                }, {where: {username: username}})
-                const NewUser = this.findOne({where: {username: NewUsername}})
-                return Promise.resolve(NewUser)
-              }
-            }
-          } else {
-            return Promise.reject("Your New Email is Already Exist");
-          }
-        }
-      } else {
-        if(isUserExist.username === NewUsername) {
+
+      if (NewPassword == ""){
+        const encryptedPass = this.#encrypt(OldPassword);
+        if (!isUsernameExist){
           if (!isEmailExist){
             if (!isUserExist) {
               return Promise.reject("User Not Found!");
@@ -178,7 +141,130 @@ module.exports = (sequelize, DataTypes) => {
             }
           }
         } else {
-          return Promise.reject("Your New Username is Already Exist");
+          if(isUserExist.username === NewUsername) {
+            if (!isEmailExist){
+              if (!isUserExist) {
+                return Promise.reject("User Not Found!");
+              } else {
+                if (!isPassValid) {
+                  return Promise.reject("Wrong Password");
+                } else {
+                  this.update({
+                    username: NewUsername,
+                    email: NewEmail,
+                    password: encryptedPass
+                  }, {where: {username: username}})
+                  const NewUser = this.findOne({where: {username: NewUsername}})
+                  return Promise.resolve(NewUser)
+                }
+              }
+            }else {
+              if(isUserExist.email === NewEmail) {
+                if (!isUserExist) {
+                  return Promise.reject("User Not Found!");
+                } else {
+                  if (!isPassValid) {
+                    return Promise.reject("Wrong Password");
+                  } else {
+                    this.update({
+                      username: NewUsername,
+                      email: NewEmail,
+                      password: encryptedPass
+                    }, {where: {username: username}})
+                    const NewUser = this.findOne({where: {username: NewUsername}})
+                    return Promise.resolve(NewUser)
+                  }
+                }
+              } else {
+                return Promise.reject("Your New Email is Already Exist");
+              }
+            }
+          } else {
+            return Promise.reject("Your New Username is Already Exist");
+          }
+        }
+      } else {
+        const encryptedPass = this.#encrypt(NewPassword);
+        if (!isUsernameExist){
+          if (!isEmailExist){
+            if (!isUserExist) {
+              return Promise.reject("User Not Found!");
+            } else {
+              if (!isPassValid) {
+                return Promise.reject("Wrong Password");
+              } else {
+                this.update({
+                  username: NewUsername,
+                  email: NewEmail,
+                  password: encryptedPass
+                }, {where: {username: username}})
+                const NewUser = this.findOne({where: {username: NewUsername}})
+                return Promise.resolve(NewUser)
+              }
+            }
+          }else {
+            if(isUserExist.email === NewEmail) {
+              if (!isUserExist) {
+                return Promise.reject("User Not Found!");
+              } else {
+                if (!isPassValid) {
+                  return Promise.reject("Wrong Password");
+                } else {
+                  this.update({
+                    username: NewUsername,
+                    email: NewEmail,
+                    password: encryptedPass
+                  }, {where: {username: username}})
+                  const NewUser = this.findOne({where: {username: NewUsername}})
+                  return Promise.resolve(NewUser)
+                }
+              }
+            } else {
+              return Promise.reject("Your New Email is Already Exist");
+            }
+          }
+        } else {
+          if(isUserExist.username === NewUsername) {
+            if (!isEmailExist){
+              if (!isUserExist) {
+                return Promise.reject("User Not Found!");
+              } else {
+                if (!isPassValid) {
+                  return Promise.reject("Wrong Password");
+                } else {
+                  this.update({
+                    username: NewUsername,
+                    email: NewEmail,
+                    password: encryptedPass
+                  }, {where: {username: username}})
+                  const NewUser = this.findOne({where: {username: NewUsername}})
+                  return Promise.resolve(NewUser)
+                }
+              }
+            }else {
+              if(isUserExist.email === NewEmail) {
+                if (!isUserExist) {
+                  return Promise.reject("User Not Found!");
+                } else {
+                  if (!isPassValid) {
+                    return Promise.reject("Wrong Password");
+                  } else {
+                    this.update({
+                      username: NewUsername,
+                      email: NewEmail,
+                      password: encryptedPass
+                    }, {where: {username: username}})
+                    const NewUser = this.findOne({where: {username: NewUsername}})
+                    return Promise.resolve(NewUser)
+                  }
+                }
+              } else {
+                return Promise.reject("Your New Email is Already Exist");
+              }
+            }
+          } else {
+            return Promise.reject("Your New Username is Already Exist");
+          }
         }
       }
     }
