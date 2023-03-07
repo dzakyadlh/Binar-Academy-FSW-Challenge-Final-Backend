@@ -100,6 +100,9 @@ module.exports = (sequelize, DataTypes) => {
       const isUsernameExist = await this.findOne({where: {username: NewUsername}})
       const isEmailExist = await this.findOne({where: {email: NewEmail}})
 
+      if(NewUsername=="") return Promise.reject("Please fill the username")
+      if(NewEmail=="") return Promise.reject("Please fill the email")
+
       if (NewPassword == ""){
         const encryptedPass = this.#encrypt(OldPassword);
         if (!isUsernameExist){
