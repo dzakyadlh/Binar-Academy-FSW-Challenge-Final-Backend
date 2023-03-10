@@ -105,6 +105,12 @@ module.exports = (sequelize, DataTypes) => {
 
       if (NewPassword == ""){
         const encryptedPass = this.#encrypt(OldPassword);
+        const NewUser = {
+          username: NewUsername,
+          email: NewEmail,
+          password: encryptedPass
+        }
+  
         if (!isUsernameExist){
           if (!isEmailExist){
             if (!isUserExist) {
@@ -118,7 +124,6 @@ module.exports = (sequelize, DataTypes) => {
                   email: NewEmail,
                   password: encryptedPass
                 }, {where: {username: username}})
-                const NewUser = this.findOne({where: {username: NewUsername}})
                 return Promise.resolve(NewUser)
               }
             }
@@ -135,7 +140,6 @@ module.exports = (sequelize, DataTypes) => {
                     email: NewEmail,
                     password: encryptedPass
                   }, {where: {username: username}})
-                  const NewUser = this.findOne({where: {username: NewUsername}})
                   return Promise.resolve(NewUser)
                 }
               }
@@ -157,7 +161,6 @@ module.exports = (sequelize, DataTypes) => {
                     email: NewEmail,
                     password: encryptedPass
                   }, {where: {username: username}})
-                  const NewUser = this.findOne({where: {username: NewUsername}})
                   return Promise.resolve(NewUser)
                 }
               }
@@ -174,7 +177,6 @@ module.exports = (sequelize, DataTypes) => {
                       email: NewEmail,
                       password: encryptedPass
                     }, {where: {username: username}})
-                    const NewUser = this.findOne({where: {username: NewUsername}})
                     return Promise.resolve(NewUser)
                   }
                 }
@@ -188,6 +190,11 @@ module.exports = (sequelize, DataTypes) => {
         }
       } else {
         const encryptedPass = this.#encrypt(NewPassword);
+        const NewUser = {
+          username: NewUsername,
+          email: NewEmail,
+          password: encryptedPass
+        }
         if (!isUsernameExist){
           if (!isEmailExist){
             if (!isUserExist) {
@@ -201,7 +208,6 @@ module.exports = (sequelize, DataTypes) => {
                   email: NewEmail,
                   password: encryptedPass
                 }, {where: {username: username}})
-                const NewUser = this.findOne({where: {username: NewUsername}})
                 return Promise.resolve(NewUser)
               }
             }
@@ -218,7 +224,6 @@ module.exports = (sequelize, DataTypes) => {
                     email: NewEmail,
                     password: encryptedPass
                   }, {where: {username: username}})
-                  const NewUser = this.findOne({where: {username: NewUsername}})
                   return Promise.resolve(NewUser)
                 }
               }
@@ -240,7 +245,6 @@ module.exports = (sequelize, DataTypes) => {
                     email: NewEmail,
                     password: encryptedPass
                   }, {where: {username: username}})
-                  const NewUser = this.findOne({where: {username: NewUsername}})
                   return Promise.resolve(NewUser)
                 }
               }
@@ -257,7 +261,6 @@ module.exports = (sequelize, DataTypes) => {
                       email: NewEmail,
                       password: encryptedPass
                     }, {where: {username: username}})
-                    const NewUser = this.findOne({where: {username: NewUsername}})
                     return Promise.resolve(NewUser)
                   }
                 }
