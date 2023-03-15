@@ -2,31 +2,26 @@ const { GameList } = require("../models");
 
 exports.get = (req, res) => {
   GameList.findAll({
-    // include: [
-    //   {
-    //     model: GameDetail,
-    //     as: "game_detail",
-    //     attributes: { exclude: ["id", "name", "game_id"] },
-    //   },
-    // ],
+    attributes: ["detail"],
   }).then((result) => {
     res.json({ status: "Fetch success", result });
   });
 };
 
 exports.getDetail = (req, res) => {
-  GameList.findAll({
-    exclude: [
-      "id",
-      "name",
-      "genre",
-      "image",
-      "game_id",
-      "createdAt",
-      "updatedAt",
-    ],
+  const gameId = req.params.id;
+
+  GameList.findOne({
+    where: {
+      id: gameId,
+    },
+    attributes: ["name", "image", "detail"],
   }).then((result) => {
-    res.json({ status: "Fetch success", result });
+    if (result) {
+      res.json({ status: "Fetch success", result });
+    } else {
+      res.status(404).json({ status: "Game not found" });
+    }
   });
 };
 

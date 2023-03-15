@@ -11,6 +11,10 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
 
+    static getDetail = () => {
+      return this.getAttributes({ detail });
+    };
+
     static createGame = ({ name, genre, image, detail }) => {
       return this.create({ name, genre, image, detail });
     };
