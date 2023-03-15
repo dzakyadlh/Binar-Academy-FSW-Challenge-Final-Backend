@@ -9,19 +9,20 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      models.GameList.hasOne(models.GameDetail, {
-        foreignKey: "game_id",
-        as: "game_detail",
-      });
     }
 
-    static createGame = ({ name, genre, image }) => {
-      return this.create({ name, genre, image });
+    static createGame = ({ name, genre, image, detail }) => {
+      return this.create({ name, genre, image, detail });
     };
 
-    static updateGame = async ({ id, name, genre, image }) => {
+    static updateGame = async ({ id, name, genre, image, detail }) => {
       const game = await this.findOne({ where: { id } });
-      game.update({ name, genre, image });
+      game.update({
+        ...(name && { name }),
+        ...(genre && { genre }),
+        ...(image && { image }),
+        ...(detail && { detail }),
+      });
       return game;
     };
   }
@@ -30,6 +31,7 @@ module.exports = (sequelize, DataTypes) => {
       name: DataTypes.STRING,
       genre: DataTypes.STRING,
       image: DataTypes.STRING,
+      detail: DataTypes.STRING,
     },
     {
       sequelize,
