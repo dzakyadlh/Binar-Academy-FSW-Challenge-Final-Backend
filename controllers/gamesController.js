@@ -1,9 +1,7 @@
 const { GameList } = require("../models");
 
 exports.get = (req, res) => {
-  GameList.findAll({
-    attributes: ["detail"],
-  }).then((result) => {
+  GameList.findAll({}).then((result) => {
     res.json({ status: "Fetch success", result });
   });
 };
