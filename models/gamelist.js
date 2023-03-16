@@ -15,11 +15,10 @@ module.exports = (sequelize, DataTypes) => {
       return this.create({ name, genre, image, detail });
     };
 
-    static updateGame = async ({ id, name, genre, image, detail }) => {
+    static updateGame = async ({ id, name, image, detail }) => {
       const game = await this.findOne({ where: { id } });
       game.update({
         ...(name && { name }),
-        ...(genre && { genre }),
         ...(image && { image }),
         ...(detail && { detail }),
       });
