@@ -1,8 +1,8 @@
 const { GameList } = require("../models");
 
 exports.get = (req, res) => {
-  GameList.findAll({}).then((data) => {
-    res.status(200).json({ status: "Fetch success", data });
+  GameList.findAll({}).then((result) => {
+    res.status(200).json({ status: "Fetch success", result });
   });
 };
 
@@ -14,9 +14,9 @@ exports.getDetail = (req, res) => {
       id: gameId,
     },
     attributes: ["name", "image", "detail"],
-  }).then((data) => {
-    if (data) {
-      res.status(200).json({ status: "Fetch success", data });
+  }).then((result) => {
+    if (result) {
+      res.status(200).json({ status: "Fetch success", result });
     } else {
       res.status(404).json({ status: "Game not found" });
     }
