@@ -11,13 +11,13 @@ var app = express();
 
 const router = require("./routes");
 
-// app.use(
-//   session({
-//     secret: "This is secret",
-//     resave: false,
-//     saveUnitializied: false
-//   })
-// )
+app.use(
+  session({
+    secret: "This is secret",
+    resave: false,
+    saveUnitializied: false,
+  })
+);
 
 app.use(passport.initialize());
 app.use(passport.session());
