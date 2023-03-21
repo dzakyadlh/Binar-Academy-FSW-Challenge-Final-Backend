@@ -29,6 +29,9 @@ module.exports = {
       detail: {
         type: Sequelize.STRING,
       },
+      video: {
+        type: Sequelize.STRING,
+      },
     });
   },
   async down(queryInterface, Sequelize) {
