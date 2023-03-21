@@ -11,16 +11,17 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
 
-    static createGame = ({ name, genre, image, detail }) => {
-      return this.create({ name, genre, image, detail });
+    static createGame = ({ name, genre, image, detail, video }) => {
+      return this.create({ name, genre, image, detail, video });
     };
 
-    static updateGame = async ({ id, name, image, detail }) => {
+    static updateGame = async ({ id, name, image, detail, video }) => {
       const game = await this.findOne({ where: { id } });
       game.update({
         ...(name && { name }),
         ...(image && { image }),
         ...(detail && { detail }),
+        ...(video && { video }),
       });
       return game;
     };
@@ -31,6 +32,7 @@ module.exports = (sequelize, DataTypes) => {
       genre: DataTypes.STRING,
       image: DataTypes.STRING,
       detail: DataTypes.STRING,
+      video: DataTypes.STRING,
     },
     {
       sequelize,
