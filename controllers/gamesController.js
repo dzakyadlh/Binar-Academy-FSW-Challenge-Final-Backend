@@ -13,7 +13,7 @@ exports.getDetail = (req, res) => {
     where: {
       id: gameId,
     },
-    attributes: ["name", "image", "detail"],
+    attributes: ["name", "image", "detail", "video"],
   }).then((result) => {
     if (result) {
       res.status(200).json({ status: "Fetch success", result });
