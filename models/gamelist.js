@@ -25,6 +25,15 @@ module.exports = (sequelize, DataTypes) => {
       });
       return game;
     };
+
+    static deleteGame = async ({ id }) => {
+      const game = await this.findOne({ where: { id } });
+      if (!game) {
+        throw new Error(`Game with id ${id} not found`);
+      }
+      await game.destroy();
+      return `Game with id ${id} has been deleted`;
+    };
   }
   GameList.init(
     {
